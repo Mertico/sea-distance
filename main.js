@@ -1,6 +1,6 @@
-const azov = require("./azov.json");
-const caspian = require("./caspian.json");
-const blackSea = require("./blackSea.json");
+const azov = require("./shapefile/azov.json");
+const caspian = require("./shapefile/caspian.json");
+const blackSea = require("./shapefile/blackSea.json");
 const distance = require("geo-dist")
 
 
