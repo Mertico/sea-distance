@@ -6,20 +6,21 @@ const distance = require("geo-dist")
 
 function getDistances(data, POS) {
   let coords = data.features[0].geometry.coordinates.flat(10)
-  let distances = {}
+  let finded;
+  let minimal = Number.MAX_SAFE_INTEGER
   for (let index = 0; index < coords.length; index+=2) {
-    let length = distance(coords[index+1], coords[index], POS[0], POS[1]).toFixed(5)
-    distances[length] = [coords[index], coords[index+1]]
+    let length = distance(coords[index+1], coords[index], POS[0], POS[1])
+    if(minimal > length) {
+      finded = {
+        distance: length,
+        coords: [coords[index], coords[index+1]]
+      }
+      minimal = length;
+    }
   }
-  let min = Math.min(...Object.keys(distances))
-
-  let minimal = distances[min]
-  return {
-    distance: min,
-    coords: minimal
-  };
+  return finded;
 }
-
+console.time();
 let POS;
 // Парковый переулок, Aviator, Azov, ROS, Russia, 346789 Latitude: 47.095501 | Longitude: 39.417253
 POS = [47.095501, 39.417253]
@@ -39,3 +40,5 @@ POS = [43.585482, 39.723109]
 console.log("blackSea",
   getDistances(blackSea, POS)
 );
+
+console.timeEnd();
